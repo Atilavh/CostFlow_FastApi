@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
-from app.auth.router import router
+from app.auth.router import router as auth_router
+from app.expenses.router import router as expenses_router
 from fastapi.exceptions import RequestValidationError
 def lifespan(app: FastAPI):
     print('Started')
@@ -8,7 +9,8 @@ def lifespan(app: FastAPI):
     print('Stopped')
 
 app = FastAPI(lifespan=lifespan, title="CostFlow_FastApi", version="0.1.0")
-app.include_router(router)
+app.include_router(auth_router)
+app.include_router(expenses_router)
 
 @app.exception_handler(RequestValidationError)
 async def validation_exception_handler(request: Request, exc: RequestValidationError):
