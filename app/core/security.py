@@ -75,7 +75,6 @@ def refresh_access_token(refresh_token: str = Cookie(None)):
         raise HTTPException(status_code=401, detail="Invalid token")
 
 def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
-    print(token)
     user_id = verify_access_token(token)
     user = get_user_by_id(db, user_id)
     if not user:
