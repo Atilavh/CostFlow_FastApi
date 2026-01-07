@@ -92,7 +92,7 @@ def forgot_password(data: UserForgotPasswordSchema, db: Session = Depends(get_db
 
 
 @router.get('/reset_password', status_code=status.HTTP_200_OK)
-def validate_reset_token(token: str, db: Session = Depends(get_db)):
+def validate_reset_token(token: str = Cookie(None), db: Session = Depends(get_db)):
     token_obj = db.query(PasswordResetToken).filter(
         PasswordResetToken.token == token,
         PasswordResetToken.expire_at > datetime.utcnow(),
