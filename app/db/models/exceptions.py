@@ -12,7 +12,9 @@ class Category(Base):
     name = Column(String, nullable=False)
     slug = Column(String, nullable=False)
     is_active = Column(Boolean, nullable=False, default=False)
-                       
+
+    user_id = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=False)
+    user = relationship("User", backref="categories") 
 
 class Expense(Base):
     __tablename__ = "expenses"
